@@ -25,7 +25,7 @@
             background-image: radial-gradient(circle at center, transparent 0%, var(--bg-crema) 100%), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z' fill='%234A3B32' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
             color: var(--espresso-brown);
             margin: 0;
-            padding: 20px 20px 100px 20px; /* مسافة تحت عشان الشريط الثابت */
+            padding: 20px 20px 100px 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -72,7 +72,6 @@
             min-height: 400px;
             position: relative;
         }
-        /* شريط ذهبي فوق الكراسة */
         .notebook::before {
             content: ''; position: absolute; top: 0; left: 20px; right: 20px; height: 4px;
             background: var(--gold); border-radius: 0 0 4px 4px; opacity: 0.5;
@@ -110,7 +109,6 @@
         }
         .person-item:hover .delete-btn { opacity: 1; left: -10px; }
 
-        /* --- الأزرار السفلية --- */
         .actions-area { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
         
         .btn-circle {
@@ -120,11 +118,9 @@
         }
         .add-btn { background-color: var(--espresso-brown); }
         .camera-btn { background-color: var(--latte-brown); font-size: 20px; }
-        
         .btn-circle:hover { transform: scale(1.1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
-        .btn-circle:active { transform: scale(0.9); }
 
-        /* --- الشريط السفلي العائم (The Accountant) --- */
+        /* --- الشريط السفلي العائم --- */
         .floating-footer {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background: var(--espresso-brown); color: white;
@@ -188,7 +184,6 @@
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <script>
-        // --- إعدادات فايربيس ---
         const firebaseConfig = {
             apiKey: "AIzaSyC41wbgVjetsHSi0xyRsoZypigr9rDTwsY",
             authDomain: "project-5583219622905769256.firebaseapp.com",
@@ -201,8 +196,9 @@
         };
 
         let db;
-        // صوت بسيط (Pop Sound)
-        const popSound = new Audio("https://www.soundjay.com/buttons/sounds/button-3.mp3");
+        
+        // غيرت الصوت هنا لصوت هادي جداً (Pop)
+        const popSound = new Audio("http://codeskulptor-demos.commondatastorage.googleapis.com/pang/pop.mp3");
 
         function checkPassword() {
             if (document.getElementById('pass-input').value === "121") {
@@ -215,7 +211,6 @@
                 }, 500);
             } else {
                 document.getElementById('error-msg').style.display = "block";
-                navigator.vibrate(200); // هز الموبايل لو الباسورد غلط
             }
         }
 
@@ -227,7 +222,7 @@
                 db.ref('users_pro').on('value', (snapshot) => {
                     const data = snapshot.val();
                     renderUsers(data);
-                    calculateTotal(data); // احسب الإجمالي كل ما البيانات تتحدث
+                    calculateTotal(data);
                 });
             }
         }
@@ -260,7 +255,8 @@
                         <div class="end-icon">☕</div>
                     `;
                     container.appendChild(userDiv);
-                    popSound.play().catch(()=>{}); // شغل صوت
+                    // تشغيل الصوت الهادي عند ظهور شخص جديد
+                    popSound.play().catch(()=>{}); 
                 }
 
                 const nameInput = document.getElementById(`name-${key}`);
@@ -275,7 +271,6 @@
                 if (document.activeElement !== debtInput) debtInput.value = user.debt || "";
             });
 
-            // Clean up deleted
             const currentIds = Object.keys(data);
             const domDivs = container.getElementsByClassName('person-item');
             for (let i = domDivs.length - 1; i >= 0; i--) {
@@ -293,11 +288,9 @@
                     total += Number(user.debt) || 0;
                 });
             }
-            // عداد بيتحرك
             animateValue("total-sum", parseInt(document.getElementById("total-sum").innerText), total, 500);
         }
 
-        // أنيميشن للأرقام
         function animateValue(id, start, end, duration) {
             if (start === end) return;
             const range = end - start;
@@ -309,11 +302,10 @@
                 current += increment;
                 obj.innerHTML = current;
                 if (current == end) { clearInterval(timer); }
-            }, Math.max(stepTime, 10)); // Min 10ms speed
+            }, Math.max(stepTime, 10));
         }
 
         function addNewUser() {
-            popSound.play().catch(()=>{});
             const newKey = db.ref('users_pro').push().key;
             db.ref('users_pro/' + newKey).set({ name: "", note: "", debt: 0 });
         }
@@ -337,21 +329,18 @@
             el.style.height = el.scrollHeight + 'px';
         }
 
-        // دالة تصوير الشاشة
         function takeScreenshot() {
             const btn = document.querySelector('.camera-btn');
             btn.innerHTML = "⏳";
-            
             html2canvas(document.getElementById("capture-area"), {
-                scale: 2, // جودة عالية
-                backgroundColor: "#FFFCF7"
+                scale: 2, backgroundColor: "#FFFCF7"
             }).then(canvas => {
                 const link = document.createElement('a');
                 link.download = 'fatoura-121.png';
                 link.href = canvas.toDataURL();
                 link.click();
                 btn.innerHTML = "📸";
-                alert("تم حفظ صورة الفاتورة على جهازك! ✅");
+                alert("تم حفظ صورة الفاتورة! ✅");
             });
         }
     </script>
