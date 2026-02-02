@@ -3,243 +3,274 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 two 1 - كراسة المشروبات</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <title>1 two 1 - Shared Note</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <style>
-        /* تعريف الألوان الأساسية */
         :root {
-            --bg-vanilla-latte: #F8F0E3; /* لون الخلفية فانيليا لاتيه */
-            --paper-color: #fffcf8; /* لون الورقة أفتح قليلاً */
-            --line-color: #d1c4b5; /* لون تسطير الكراسة */
-            --text-brown: #5a4a42; /* لون الخط بني غامق مريح */
+            --bg-vanilla: #F8F0E3;
+            --paper: #fffcf8;
+            --line: #d1c4b5;
+            --ink: #5a4a42;
         }
 
         body {
             font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-vanilla-latte);
-            color: var(--text-brown);
+            background-color: var(--bg-vanilla);
+            color: var(--ink);
             margin: 0;
             padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
         }
 
-        /* تنسيق اللوجو العلوي */
-        .header-logo {
+        /* اللوجو العلوي */
+        .logo-container {
             text-align: center;
-            font-size: 36px;
-            font-weight: 800;
-            color: var(--text-brown);
-            margin-bottom: 30px;
-            letter-spacing: 2px;
-            /* تأثير بسيط تحت اللوجو */
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
-        }
-        
-        /* الحاوية الرئيسية التي تشبه صفحة الكراسة */
-        .notebook-page {
-            max-width: 600px;
-            margin: 0 auto; /* توسيط الصفحة */
-            background-color: var(--paper-color);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 6px 15px rgba(90, 74, 66, 0.08);
-            border: 1px solid #eaddd0;
-        }
-
-        /* تنسيق السطر الخاص بكل شخص */
-        .person-entry {
-            display: flex; /* عشان نحط الأيقونة جنب الكلام */
-            align-items: flex-start;
             margin-bottom: 25px;
-            padding-bottom: 25px;
-            /* الخط الفاصل المنقط تحت كل شخص */
-            border-bottom: 2px dashed var(--line-color);
         }
-        
-        /* أيقونة فنجان القهوة */
-        .coffee-icon {
-            font-size: 28px;
+        .logo-text {
+            font-size: 40px;
+            font-weight: 900;
+            color: #3e2f28;
+            letter-spacing: 4px;
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.5);
+        }
+        .logo-sub {
+            font-size: 14px;
+            color: #8b7366;
+            margin-top: -10px;
+        }
+
+        /* شكل صفحة الكراسة */
+        .notebook {
+            width: 100%;
+            max-width: 500px;
+            background-color: var(--paper);
+            padding: 40px 30px;
+            border-radius: 8px;
+            box-shadow: 
+                0 1px 4px rgba(0,0,0,0.05), 
+                0 10px 20px rgba(90, 74, 66, 0.1);
+            position: relative;
+            /* خط جانبي أحمر زي الكراسات */
+            background-image: linear-gradient(to right, transparent 93%, #ffcccc 93%, #ffcccc 94%, transparent 94%);
+        }
+
+        /* سطر الشخص */
+        .person-row {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 30px;
+            position: relative;
+        }
+
+        .icon {
+            font-size: 24px;
             margin-left: 15px;
-            padding-top: 5px;
+            margin-top: 5px;
+            filter: drop-shadow(0 2px 2px rgba(0,0,0,0.1));
         }
 
-        /* محتوى بيانات الشخص */
-        .entry-details {
-            flex-grow: 1; /* يأخذ باقي المساحة */
+        .inputs-group {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        /* تنسيق خانات الإدخال لتشبه الأسطر */
-        .notebook-input {
+        /* الاستايل بتاع السطر */
+        .line-input {
             width: 100%;
             border: none;
             background: transparent;
-            border-bottom: 2px solid var(--line-color); /* السطر */
+            border-bottom: 1.5px solid var(--line);
             font-family: 'Cairo', sans-serif;
             font-size: 18px;
-            color: var(--text-brown);
-            padding: 8px 0;
-            margin-bottom: 15px;
-            outline: none; /* إزالة برواز التركيز الأزرق */
-            transition: border-color 0.3s;
+            color: var(--ink);
+            padding: 5px 0;
+            outline: none;
+            transition: 0.3s;
+        }
+        .line-input:focus {
+            border-bottom-color: #8b7366;
+            background-color: rgba(255, 255, 255, 0.4);
         }
 
-        /* عند الضغط على السطر يتغير لونه */
-        .notebook-input:focus {
-            border-bottom-color: #a68b7c;
-        }
-
-        /* تنسيق خاص لخانة الاسم */
-        .name-input {
+        .name-field {
             font-weight: 700;
             font-size: 20px;
+            color: #3e2f28;
         }
 
-        /* تنسيق خانة المشروبات (تكبر تلقائياً) */
-        textarea.notebook-input {
-            resize: vertical; /* السماح بالتكبير الرأسي فقط */
-            min-height: 60px;
-            line-height: 1.5;
+        textarea.line-input {
+            resize: none;
+            overflow: hidden;
+            min-height: 40px;
+            line-height: 1.6;
         }
 
-        /* تنسيق سطر المديونية */
-        .debt-row {
+        .debt-container {
             display: flex;
             align-items: center;
-            font-weight: bold;
+            justify-content: flex-end;
+            font-size: 14px;
+            margin-top: 5px;
+            color: #8b7366;
         }
-        .debt-input {
-            width: 100px;
+        .debt-field {
+            width: 70px;
             text-align: center;
-            margin: 0 10px;
             font-weight: bold;
+            color: #d32f2f; /* لون أحمر للمديونية */
+            margin: 0 5px;
         }
 
-        .status {
-            text-align: center;
-            margin-top: 20px;
-            font-size: 14px;
-            color: #88766a;
+        /* فاصل منقط بين الشخصين */
+        .separator {
+            border-top: 2px dashed var(--line);
+            margin: 20px 0;
+            position: relative;
         }
+        /* شكل مقص صغير ع الخط */
+        .separator::after {
+            content: '✂️';
+            position: absolute;
+            left: -10px;
+            top: -12px;
+            font-size: 14px;
+            opacity: 0.5;
+        }
+
+        .status-bar {
+            margin-top: 20px;
+            font-size: 12px;
+            color: #8b7366;
+            background: rgba(255,255,255,0.5);
+            padding: 5px 15px;
+            border-radius: 20px;
+        }
+
     </style>
 </head>
 <body>
 
-    <div class="header-logo">1 2 1</div>
+    <div class="logo-container">
+        <div class="logo-text">1 2 1</div>
+        <div class="logo-sub">Shared Coffee Note</div>
+    </div>
 
-    <div class="notebook-page">
+    <div class="notebook">
         
-        <div class="person-entry">
-            <div class="coffee-icon">☕</div>
-            <div class="entry-details">
-                <input type="text" id="p1_name" class="notebook-input name-input" placeholder="اسم الشخص الأول..." oninput="updateDB()">
-                
-                <textarea id="p1_note" class="notebook-input" placeholder="اكتب المشروبات هنا (السطر سيكبر معك)..." oninput="updateDB()"></textarea>
-                
-                <div class="debt-row">
-                    <span>الحساب:</span>
-                    <input type="number" id="p1_debt" class="notebook-input debt-input" placeholder="0" oninput="updateDB()">
-                    <span>جنيه</span>
+        <div class="person-row">
+            <div class="icon">☕</div>
+            <div class="inputs-group">
+                <input type="text" id="p1_name" class="line-input name-field" placeholder="الاسم الأول..." oninput="autoSave()">
+                <textarea id="p1_note" class="line-input" placeholder="اكتب المشروبات..." oninput="autoSave(); autoResize(this)"></textarea>
+                <div class="debt-container">
+                    عليك: <input type="number" id="p1_debt" class="line-input debt-field" placeholder="0" oninput="autoSave()"> ج.م
                 </div>
             </div>
         </div>
 
-        <div class="person-entry">
-            <div class="coffee-icon">☕</div>
-            <div class="entry-details">
-                <input type="text" id="p2_name" class="notebook-input name-input" placeholder="اسم الشخص الثاني..." oninput="updateDB()">
-                
-                <textarea id="p2_note" class="notebook-input" placeholder="اكتب المشروبات هنا (السطر سيكبر معك)..." oninput="updateDB()"></textarea>
-                
-                <div class="debt-row">
-                    <span>الحساب:</span>
-                    <input type="number" id="p2_debt" class="notebook-input debt-input" placeholder="0" oninput="updateDB()">
-                    <span>جنيه</span>
+        <div class="separator"></div>
+
+        <div class="person-row">
+            <div class="icon">☕</div>
+            <div class="inputs-group">
+                <input type="text" id="p2_name" class="line-input name-field" placeholder="الاسم الثاني..." oninput="autoSave()">
+                <textarea id="p2_note" class="line-input" placeholder="اكتب المشروبات..." oninput="autoSave(); autoResize(this)"></textarea>
+                <div class="debt-container">
+                    عليك: <input type="number" id="p2_debt" class="line-input debt-field" placeholder="0" oninput="autoSave()"> ج.م
                 </div>
             </div>
         </div>
 
     </div>
 
-    <div class="status" id="status">جاري الاتصال بالكراسة...</div>
+    <div id="status" class="status-bar">في انتظار الاتصال...</div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
     <script>
-        // ----------------------------------------------------
-        // هام: ضع هنا كود إعدادات فايربيس الخاص بك
-        // ----------------------------------------------------
+        // ==========================================
+        // بيانات مشروعك (تمت إضافتها بنجاح)
+        // ==========================================
+        
         const firebaseConfig = {
-            // ... انسخ الـ config بتاعك هنا مكان النقط دي ...
-            // apiKey: "AIzaSyB...",
-            // authDomain: "...",
-            // ... إلخ
-        }; 
-
-        // (لو نسيت الـ config القديم، متقلقش، الكود ده هيشتغل بس مش هيحفظ أونلاين لحد ما تحطه)
-        // لو معاك الـ config، امسح السطرين الجايين دول وحط الـ config بتاعك فوق
-        if (!firebase.apps.length) {
-             alert("تنبيه: لم يتم وضع إعدادات Firebase. الكود سيعمل كشكل فقط ولن يحفظ البيانات.");
-        } else {
-             // تهيئة فايربيس
-            firebase.initializeApp(firebaseConfig);
-        }
-       
-
-        // باقي كود الجافاسكريبت (زي ما هو بدون تغيير عشان المنطق يفضل شغال)
-        let db;
-        if (firebase.apps.length) { db = firebase.database(); }
-        const statusDiv = document.getElementById('status');
-
-        const inputs = {
-            p1: {
-                name: document.getElementById('p1_name'),
-                note: document.getElementById('p1_note'),
-                debt: document.getElementById('p1_debt')
-            },
-            p2: {
-                name: document.getElementById('p2_name'),
-                note: document.getElementById('p2_note'),
-                debt: document.getElementById('p2_debt')
-            }
+            apiKey: "AIzaSyC41wbgVjetsHSi0xyRsoZypigr9rDTwsY",
+            authDomain: "project-5583219622905769256.firebaseapp.com",
+            databaseURL: "https://project-5583219622905769256-default-rtdb.firebaseio.com",
+            projectId: "project-5583219622905769256",
+            storageBucket: "project-5583219622905769256.firebasestorage.app",
+            messagingSenderId: "11178686775",
+            appId: "1:11178686775:web:112f416c31f02233df42b2",
+            measurementId: "G-RLHEZ6C1LV"
         };
 
-        function updateDB() {
-            if (!db) return;
-            db.ref('notebook_data').set({
+        // تهيئة فايربيس
+        const app = firebase.initializeApp(firebaseConfig);
+        const analytics = firebase.analytics(); // تم تفعيل الأناليتكس
+        const db = firebase.database();
+
+        // ==========================================
+        // منطق البرنامج (Logic)
+        // ==========================================
+
+        // الاستماع للتغييرات القادمة من السيرفر
+        db.ref('notebook_v2').on('value', (snapshot) => {
+            const data = snapshot.val();
+            if (data) {
+                updateField('p1_name', data.p1?.name);
+                updateField('p1_note', data.p1?.note);
+                updateField('p1_debt', data.p1?.debt);
+                
+                updateField('p2_name', data.p2?.name);
+                updateField('p2_note', data.p2?.note);
+                updateField('p2_debt', data.p2?.debt);
+                
+                document.getElementById('status').innerText = "✅ متصل - البيانات محدثة";
+            }
+        });
+
+        // دالة الحفظ التلقائي عند الكتابة
+        function autoSave() {
+            document.getElementById('status').innerText = "⏳ جاري الحفظ...";
+            
+            db.ref('notebook_v2').set({
                 p1: {
-                    name: inputs.p1.name.value,
-                    note: inputs.p1.note.value,
-                    debt: inputs.p1.debt.value
+                    name: document.getElementById('p1_name').value,
+                    note: document.getElementById('p1_note').value,
+                    debt: document.getElementById('p1_debt').value
                 },
                 p2: {
-                    name: inputs.p2.name.value,
-                    note: inputs.p2.note.value,
-                    debt: inputs.p2.debt.value
+                    name: document.getElementById('p2_name').value,
+                    note: document.getElementById('p2_note').value,
+                    debt: document.getElementById('p2_debt').value
                 }
-            }, (error) => {
-                if (error) { statusDiv.innerText = "خطأ في الحفظ!"; }
-                else {
-                    statusDiv.innerText = "جاري الحفظ...";
-                    setTimeout(() => statusDiv.innerText = "تم الحفظ في الكراسة ✓", 1000);
-                }
+            }).catch(error => {
+                console.error("Error saving:", error);
+                document.getElementById('status').innerText = "❌ خطأ في الحفظ (تأكد من الانترنت)";
             });
         }
 
-        if (db) {
-            db.ref('notebook_data').on('value', (snapshot) => {
-                const data = snapshot.val();
-                if (data) {
-                    if (document.activeElement !== inputs.p1.name) inputs.p1.name.value = data.p1.name || "";
-                    if (document.activeElement !== inputs.p1.note) inputs.p1.note.value = data.p1.note || "";
-                    if (document.activeElement !== inputs.p1.debt) inputs.p1.debt.value = data.p1.debt || "";
-                    
-                    if (document.activeElement !== inputs.p2.name) inputs.p2.name.value = data.p2.name || "";
-                    if (document.activeElement !== inputs.p2.note) inputs.p2.note.value = data.p2.note || "";
-                    if (document.activeElement !== inputs.p2.debt) inputs.p2.debt.value = data.p2.debt || "";
-                    
-                    statusDiv.innerText = "متصل - الكراسة محدثة";
-                }
-            });
+        // دالة مساعدة لتحديث الحقول دون مقاطعة الكتابة
+        function updateField(id, value) {
+            const el = document.getElementById(id);
+            // الشرط ده مهم عشان لو أنا اللي بكتب، المؤشر ميرجعش لورا
+            if (document.activeElement !== el) {
+                el.value = value || "";
+                if(el.tagName === 'TEXTAREA') autoResize(el);
+            }
+        }
+
+        // دالة تكبير خانة الكتابة تلقائياً
+        function autoResize(el) {
+            el.style.height = 'auto';
+            el.style.height = el.scrollHeight + 'px';
         }
     </script>
 </body>
