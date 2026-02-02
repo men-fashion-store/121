@@ -3,263 +3,203 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>1 two 1 - Premium Note</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
+    <title>1 2 1 - Notebook</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&family=Reem+Kufi:wght@600&display=swap" rel="stylesheet">
     <style>
-        /* لوحة الألوان الاحترافية الجديدة */
         :root {
-            --bg-crema: #F2EAD3;      /* خلفية كريمي فاتحة */
-            --paper-white: #FFFCF7;   /* لون الورقة */
-            --espresso-brown: #4A3B32; /* بني غامق للوجو والعناوين */
-            --latte-brown: #8C7B70;    /* بني متوسط للنصوص الثانوية */
-            --gold-accent: #D4AF37;    /* لون ذهبي خفيف للتحديد */
-            --line-color: #E0D6CC;     /* لون السطور */
-            --debt-red: #C0392B;       /* لون المديونية */
+            --bg-desk: #e8e0d5;       /* لون المكتب الخشبي */
+            --paper-color: #fffcf5;   /* لون الورق المصفر قليلًا */
+            --line-color: #b5d0e2;    /* لون تسطير الكراسة (أزرق فاتح) */
+            --margin-line: #ffcccc;   /* الخط الأحمر الطولي (الهامش) */
+            --ink-color: #2c3e50;     /* لون الحبر (أزرق غامق مائل للسواد) */
+            --brown-coffee: #4e342e;
         }
 
         body {
-            font-family: 'Cairo', sans-serif;
-            background-color: var(--bg-crema);
-            /* خلفية بنمط خفيف جداً لحبوب قهوة */
-            background-image: radial-gradient(circle at center, transparent 0%, var(--bg-crema) 100%), url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M30 30c0-5.523 4.477-10 10-10s10 4.477 10 10-4.477 10-10 10-10-4.477-10-10z' fill='%234A3B32' fill-opacity='0.03' fill-rule='evenodd'/%3E%3C/svg%3E");
-            color: var(--espresso-brown);
+            font-family: 'Reem Kufi', 'Cairo', sans-serif;
+            background-color: var(--bg-desk);
+            /* ملمس خشب خفيف في الخلفية */
+            background-image: url("https://www.transparenttextures.com/patterns/wood-pattern.png");
             margin: 0;
-            padding: 30px 20px;
+            padding: 20px 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             min-height: 100vh;
         }
 
-        /* --- شاشة القفل (تصميم محسن) --- */
+        /* --- شاشة القفل --- */
         #login-screen {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-crema); z-index: 999;
+            background: var(--brown-coffee); z-index: 999;
             display: flex; flex-direction: column; justify-content: center; align-items: center;
-        }
-        .login-box {
-            background: var(--paper-white); padding: 40px 30px; border-radius: 20px;
-            text-align: center;
-            box-shadow: 0 20px 40px rgba(74, 59, 50, 0.15);
-            border: 1px solid var(--line-color);
+            color: white;
         }
         .login-input {
-            width: 100%; padding: 12px; font-size: 22px; text-align: center;
-            border: 2px solid var(--line-color); border-radius: 10px; margin: 20px 0;
-            font-family: 'Cairo', sans-serif; color: var(--espresso-brown);
-            background: #FAF8F5; transition: 0.3s;
+            padding: 10px; font-size: 20px; border-radius: 5px; border: none; text-align: center; margin: 10px;
         }
-        .login-input:focus { border-color: var(--espresso-brown); outline: none; }
         .login-btn {
-            background: var(--espresso-brown); color: white; border: none;
-            padding: 12px 40px; border-radius: 10px; font-size: 18px; font-weight: bold;
-            cursor: pointer; font-family: 'Cairo', sans-serif; transition: 0.3s;
+            padding: 10px 30px; background: #d4a017; border: none; color: #fff; font-weight: bold; cursor: pointer; border-radius: 5px;
         }
-        .login-btn:hover { background: #362b24; transform: translateY(-2px); }
 
-        /* --- الهيدر واللوجو الجديد --- */
-        .header-container {
-            margin-bottom: 35px;
-            text-align: center;
+        /* --- اللوجو --- */
+        .header-area {
+            text-align: center; margin-bottom: 20px;
+            display: flex; align-items: center; gap: 15px;
+        }
+        .logo-text {
+            font-size: 50px; font-weight: 900; color: var(--brown-coffee);
+            text-shadow: 2px 2px 0px rgba(255,255,255,0.4);
+        }
+        .bean { font-size: 35px; filter: drop-shadow(2px 2px 2px rgba(0,0,0,0.3)); }
+
+        /* --- تصميم ورقة الكراسة (العبقرية هنا) --- */
+        .notebook-sheet {
+            width: 100%;
+            max-width: 600px;
+            background-color: var(--paper-color);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1), 0 15px 35px rgba(0,0,0,0.1);
             position: relative;
-        }
-        
-        /* حاوية اللوجو وحبوب البن */
-        .logo-wrapper {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px; /* مسافة بين النص والحبوب */
-        }
-
-        .main-logo-text {
-            font-size: 48px;
-            font-weight: 900; /* خط عريض جداً */
-            color: var(--espresso-brown);
-            letter-spacing: 2px;
-            line-height: 1;
-            /* تأثير ظل خفيف للوجو */
-            text-shadow: 2px 2px 4px rgba(74, 59, 50, 0.1);
-        }
-
-        /* تصميم حبوب البن الجانبية */
-        .coffee-bean-decor {
-            font-size: 32px;
-            /* خدعة CSS عشان نخلي الإيموجي نفس لون النص بالظبط */
-            color: transparent;
-            text-shadow: 0 0 0 var(--espresso-brown);
-            filter: drop-shadow(1px 1px 1px rgba(74, 59, 50, 0.2));
-        }
-        .bean-left { transform: rotate(-30deg); }
-        .bean-right { transform: rotate(30deg) scaleX(-1); }
-
-
-        .logo-sub {
-            font-size: 14px; font-weight: 700; color: var(--latte-brown);
-            margin-top: 5px; letter-spacing: 1px; text-transform: uppercase;
-        }
-
-        /* --- جسم الكراسة الاحترافي --- */
-        .notebook {
-            width: 100%; max-width: 550px;
-            background-color: var(--paper-white);
-            padding: 50px 40px;
-            border-radius: 16px;
-            /* ظل واقعي للكراسة */
-            box-shadow: 
-                0 2px 5px rgba(0,0,0,0.05), 
-                0 20px 35px rgba(74, 59, 50, 0.12);
-            position: relative;
-            border: 1px solid #EDE6DE;
-        }
-
-        /* تنسيق السطر (تم تعديل الترتيب) */
-        .person-row {
-            display: flex;
-            align-items: flex-start; /* محاذاة للأعلى */
-            justify-content: space-between;
+            padding: 40px 20px 40px 60px; /* الـ 60 عشان الهامش الأحمر */
             margin-bottom: 30px;
+            border-radius: 2px;
+            /* رسم الهامش الأحمر */
+            background-image: linear-gradient(to left, transparent 55px, #ffb3b3 56px, transparent 57px);
         }
 
-        /* مجموعة المدخلات على اليمين */
-        .inputs-group {
-            flex: 1; /* تأخذ كل المساحة المتاحة */
-            display: flex;
-            flex-direction: column;
-            gap: 12px;
-            padding-left: 20px; /* مسافة بين الكتابة والأيقونة اللي في الآخر */
+        /* ثقوب الكراسة */
+        .notebook-sheet::before {
+            content: ""; position: absolute; top: 0; right: 15px; bottom: 0; width: 30px;
+            background-image: radial-gradient(circle, #333 30%, transparent 33%);
+            background-size: 30px 40px; opacity: 0.1;
         }
 
-        /* الأيقونة في آخر السطر */
-        .end-icon {
-            font-size: 28px;
-            margin-top: 5px; /* محاذاة مع أول سطر كتابة */
-            color: var(--espresso-brown);
-            opacity: 0.9;
-            filter: drop-shadow(0 2px 3px rgba(74, 59, 50, 0.2));
+        .person-section {
+            margin-bottom: 50px;
+            position: relative;
         }
-        
-        /* تنسيق حقول الإدخال */
-        .line-input {
-            width: 100%; border: none; background: transparent;
-            border-bottom: 2px solid var(--line-color);
-            font-family: 'Cairo', sans-serif; font-size: 18px; font-weight: 500;
-            color: var(--espresso-brown); padding: 8px 0; outline: none; transition: 0.3s;
-        }
-        .line-input:focus {
-            border-bottom-color: var(--espresso-brown);
-            background: linear-gradient(to bottom, transparent 95%, rgba(74, 59, 50, 0.05) 100%);
-        }
-        .line-input::placeholder { color: #B0A69E; font-weight: 400;}
 
-        .name-field { font-weight: 900; font-size: 21px; color: var(--espresso-brown); }
-        
-        textarea.line-input {
-            resize: none; overflow: hidden; min-height: 45px; line-height: 1.6;
+        /* خانة الاسم (عنوان فوق السطور) */
+        .name-header {
+            width: 100%;
+            border: none;
+            background: transparent;
+            font-family: 'Cairo', sans-serif;
+            font-weight: 900;
+            font-size: 24px;
+            color: var(--brown-coffee);
+            margin-bottom: 10px;
+            border-bottom: 3px solid var(--brown-coffee);
+            padding-bottom: 5px;
+        }
+
+        /* --- منطقة الكتابة المسطرة --- */
+        /* دي الخدعة اللي بتخلي السطور مرسومة جوه الـ textarea */
+        .ruled-textarea {
+            width: 100%;
+            border: none;
+            background-color: transparent;
+            /* رسم السطور بالـ CSS */
+            background-image: repeating-linear-gradient(transparent, transparent 39px, var(--line-color) 40px);
+            background-attachment: local; /* عشان السطور تتحرك مع الكتابة */
+            line-height: 40px; /* لازم نفس ارتفاع السطر في الخلفية */
+            font-size: 20px;
+            font-family: 'Reem Kufi', cursive; /* خط يشبه خط اليد */
+            color: var(--ink-color);
+            outline: none;
+            resize: none;
+            overflow: hidden;
+            padding-top: 6px; /* ضبط مكان الكلام على السطر */
         }
         
-        .debt-container {
-            display: flex; align-items: center; font-size: 15px;
-            margin-top: 8px; color: var(--latte-brown); font-weight: 700;
+        .ruled-textarea::placeholder {
+            color: rgba(0,0,0,0.2);
+            font-size: 16px;
         }
-        .debt-field {
-            width: 80px; text-align: center; font-weight: 900;
-            color: var(--debt-red); margin: 0 8px; font-size: 19px;
-            border-bottom-width: 2px;
+
+        /* خانة المديونية تحت */
+        .debt-footer {
+            display: flex; justify-content: flex-end; align-items: center;
+            margin-top: 10px; font-weight: bold; color: var(--brown-coffee);
         }
-        
-        /* الفاصل */
-        .separator {
-            border-top: 2px dashed #D1C4B5;
-            margin: 35px 0; position: relative; opacity: 0.6;
+        .debt-input {
+            width: 80px; border: 2px solid var(--brown-coffee); border-radius: 8px;
+            text-align: center; padding: 5px; font-size: 18px; margin: 0 10px;
+            color: #c0392b; background: rgba(255,255,255,0.5);
         }
-        
-        .status-bar {
-            margin-top: 25px; font-size: 13px; font-weight: 700;
-            color: var(--latte-brown);
-            background: rgba(255,255,255,0.7);
-            padding: 8px 20px; border-radius: 30px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+
+        .status {
+            position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
+            background: #333; color: white; padding: 5px 15px; border-radius: 20px; font-size: 12px;
         }
     </style>
 </head>
 <body>
 
     <div id="login-screen">
-        <div class="login-box">
-            <div class="logo-wrapper" style="margin-bottom: 20px; transform: scale(0.8);">
-                <span class="coffee-bean-decor bean-left">🫘</span>
-                <div class="main-logo-text">1 2 1</div>
-                <span class="coffee-bean-decor bean-right">🫘</span>
-            </div>
-            <p style="font-weight: bold; color: var(--latte-brown);">أدخل الرمز السري</p>
-            <input type="password" id="pass-input" class="login-input" placeholder="••••">
-            <button onclick="checkPassword()" class="login-btn">فتح الكراسة</button>
-            <p id="error-msg" style="color:var(--debt-red); display:none; margin-top:15px; font-weight:bold;">الرمز خطأ!</p>
+        <div class="header-area">
+            <div class="bean">🫘</div>
+            <div class="logo-text" style="color:#fff">1 2 1</div>
+            <div class="bean" style="transform: scaleX(-1);">🫘</div>
         </div>
+        <p>ممنوع الدخول لغير المشتركين</p>
+        <input type="password" id="pass-input" class="login-input" placeholder="الرمز السري">
+        <button onclick="checkPassword()" class="login-btn">فتح الكراسة</button>
+        <p id="error-msg" style="display:none; color:#ff6b6b; margin-top:10px;">غلط!</p>
     </div>
 
     <div id="app-content" style="display: none; width: 100%; flex-direction: column; align-items: center;">
         
-        <div class="header-container">
-            <div class="logo-wrapper">
-                <span class="coffee-bean-decor bean-left">🫘</span>
-                <div class="main-logo-text">1 2 1</div>
-                <span class="coffee-bean-decor bean-right">🫘</span>
-            </div>
-            <div class="logo-sub">Premium Coffee Note</div>
+        <div class="header-area">
+            <div class="bean">🫘</div>
+            <div class="logo-text">1 2 1</div>
+            <div class="bean" style="transform: scaleX(-1);">🫘</div>
         </div>
 
-        <div class="notebook">
-            <div class="person-row">
-                <div class="inputs-group">
-                    <input type="text" id="p1_name" class="line-input name-field" placeholder="الاسم الأول..." oninput="autoSave()">
-                    <textarea id="p1_note" class="line-input" placeholder="المشروبات والطلبات..." oninput="autoSave(); autoResize(this)"></textarea>
-                    <div class="debt-container">
-                        الحساب: <input type="number" id="p1_debt" class="line-input debt-field" placeholder="0" oninput="autoSave()"> جنيه
-                    </div>
+        <div class="notebook-sheet">
+            
+            <div class="person-section">
+                <input type="text" id="p1_name" class="name-header" placeholder="اسم الشخص الأول.." oninput="autoSave()">
+                <textarea id="p1_note" class="ruled-textarea" 
+                    placeholder="اكتب هنا.. ودوس Enter لفتح سطر جديد" 
+                    oninput="autoSave(); autoResize(this)"></textarea>
+                
+                <div class="debt-footer">
+                    <span>الحساب الكلي:</span>
+                    <input type="number" id="p1_debt" class="debt-input" placeholder="0" oninput="autoSave()">
+                    <span>ج.م</span>
                 </div>
-                <div class="end-icon">☕</div>
             </div>
 
-            <div class="separator"></div>
-
-            <div class="person-row">
-                 <div class="inputs-group">
-                    <input type="text" id="p2_name" class="line-input name-field" placeholder="الاسم الثاني..." oninput="autoSave()">
-                    <textarea id="p2_note" class="line-input" placeholder="المشروبات والطلبات..." oninput="autoSave(); autoResize(this)"></textarea>
-                    <div class="debt-container">
-                        الحساب: <input type="number" id="p2_debt" class="line-input debt-field" placeholder="0" oninput="autoSave()"> جنيه
-                    </div>
-                </div>
-                 <div class="end-icon">☕</div>
+            <div style="border-top: 2px dashed #999; margin: 30px 0; position: relative; opacity: 0.5;">
+                <span style="position: absolute; left: -25px; top: -10px;">✂️</span>
             </div>
+
+            <div class="person-section">
+                <input type="text" id="p2_name" class="name-header" placeholder="اسم الشخص الثاني.." oninput="autoSave()">
+                <textarea id="p2_note" class="ruled-textarea" 
+                    placeholder="اكتب هنا.. ودوس Enter لفتح سطر جديد" 
+                    oninput="autoSave(); autoResize(this)"></textarea>
+                
+                <div class="debt-footer">
+                    <span>الحساب الكلي:</span>
+                    <input type="number" id="p2_debt" class="debt-input" placeholder="0" oninput="autoSave()">
+                    <span>ج.م</span>
+                </div>
+            </div>
+
         </div>
 
-        <div id="status" class="status-bar">في انتظار الاتصال...</div>
+        <div id="status" class="status">جاري التحميل...</div>
     </div>
 
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-analytics.js"></script>
 
     <script>
-        function checkPassword() {
-            const input = document.getElementById('pass-input').value;
-            if (input === "121") {
-                document.getElementById('login-screen').style.opacity = "0";
-                setTimeout(() => {
-                    document.getElementById('login-screen').style.display = "none";
-                    document.getElementById('app-content').style.display = "flex";
-                    startFirebase(); 
-                }, 300);
-            } else {
-                document.getElementById('error-msg').style.display = "block";
-                document.getElementById('pass-input').style.borderColor = "var(--debt-red)";
-            }
-        }
-
-        // --- بياناتك ---
+        // ------------------------------------------
+        // الكود النهائي (تم دمج بياناتك)
+        // ------------------------------------------
         const firebaseConfig = {
             apiKey: "AIzaSyC41wbgVjetsHSi0xyRsoZypigr9rDTwsY",
             authDomain: "project-5583219622905769256.firebaseapp.com",
@@ -273,13 +213,24 @@
 
         let db;
 
-        function startFirebase() {
+        // الباسورد
+        function checkPassword() {
+            if(document.getElementById('pass-input').value === "121") {
+                document.getElementById('login-screen').style.display = "none";
+                document.getElementById('app-content').style.display = "flex";
+                initFirebase();
+            } else {
+                document.getElementById('error-msg').style.display = "block";
+            }
+        }
+
+        function initFirebase() {
             if (!firebase.apps.length) {
                 firebase.initializeApp(firebaseConfig);
-                firebase.analytics();
                 db = firebase.database();
                 
-                db.ref('notebook_v2').on('value', (snapshot) => {
+                // الاستماع
+                db.ref('notebook_final').on('value', (snapshot) => {
                     const data = snapshot.val();
                     if (data) {
                         updateField('p1_name', data.p1?.name);
@@ -289,9 +240,7 @@
                         updateField('p2_name', data.p2?.name);
                         updateField('p2_note', data.p2?.note);
                         updateField('p2_debt', data.p2?.debt);
-                        
-                        document.getElementById('status').innerHTML = "✅ متصل";
-                        document.getElementById('status').style.color = "green";
+                        document.getElementById('status').innerText = "✅ متصل";
                     }
                 });
             }
@@ -299,10 +248,8 @@
 
         function autoSave() {
             if(!db) return;
-            document.getElementById('status').innerHTML = "⏳ جاري الحفظ...";
-            document.getElementById('status').style.color = "var(--latte-brown)";
-            
-            db.ref('notebook_v2').set({
+            document.getElementById('status').innerText = "💾 حفظ...";
+            db.ref('notebook_final').set({
                 p1: {
                     name: document.getElementById('p1_name').value,
                     note: document.getElementById('p1_note').value,
@@ -324,9 +271,12 @@
             }
         }
 
+        // الكود ده بيخلي الصفحة تطول لوحدها لما تدوس انتر
         function autoResize(el) {
             el.style.height = 'auto';
-            el.style.height = el.scrollHeight + 'px';
+            // الـ 40 دي عشان نضمن انها دايمًا بتقفل على سطر كامل (مضاعفات ارتفاع السطر)
+            let newHeight = el.scrollHeight;
+            el.style.height = newHeight + 'px';
         }
     </script>
 </body>
