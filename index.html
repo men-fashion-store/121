@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>1 2 1 - Professional</title>
+    <title>1 2 1 - Smart Cashier</title>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@500;700;900&display=swap" rel="stylesheet">
     <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
     <style>
@@ -15,6 +15,7 @@
             --line-color: #E0D6CC;
             --debt-red: #C0392B;
             --gold: #D4AF37;
+            --green-price: #27ae60;
         }
 
         * { box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -45,13 +46,11 @@
         }
         .login-input {
             padding: 12px; font-size: 22px; text-align: center; border: 2px solid var(--line-color);
-            border-radius: 12px; margin: 20px 0; background: #FAF8F5; font-family: 'Cairo', sans-serif; outline: none;
-            width: 100%;
+            border-radius: 12px; margin: 20px 0; background: #FAF8F5; font-family: 'Cairo', sans-serif; outline: none; width: 100%;
         }
         .login-btn {
             background: var(--espresso-brown); color: white; border: none; padding: 12px 40px;
             border-radius: 12px; font-size: 18px; cursor: pointer; font-family: 'Cairo', sans-serif;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
         }
 
         /* --- الهيدر واللوجو --- */
@@ -65,7 +64,7 @@
         .notebook {
             width: 100%; max-width: 600px;
             background-color: var(--paper-white);
-            padding: 40px 30px;
+            padding: 30px 20px;
             border-radius: 16px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05), 0 20px 40px rgba(74, 59, 50, 0.12);
             border: 1px solid #EDE6DE;
@@ -77,62 +76,89 @@
             background: var(--gold); border-radius: 0 0 4px 4px; opacity: 0.5;
         }
 
-        /* --- عنصر الشخص --- */
-        .person-item {
-            display: flex; align-items: flex-start; margin-bottom: 25px; padding-bottom: 25px;
-            border-bottom: 2px dashed var(--line-color); position: relative;
-            animation: slideIn 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* --- كارت الشخص --- */
+        .person-card {
+            background: #fff;
+            border: 1px solid var(--line-color);
+            border-radius: 12px;
+            padding: 15px;
+            margin-bottom: 25px;
+            position: relative;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            animation: slideIn 0.3s ease;
         }
-        @keyframes slideIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes slideIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .inputs-group { flex: 1; display: flex; flex-direction: column; gap: 8px; padding-left: 15px; }
-
-        .line-input {
-            width: 100%; border: none; background: transparent;
-            border-bottom: 2px solid var(--line-color);
-            font-family: 'Cairo', sans-serif; font-size: 18px; color: var(--espresso-brown);
-            padding: 6px 0; outline: none; transition: 0.3s;
+        /* رأس الكارت (الاسم) */
+        .card-header {
+            display: flex; justify-content: space-between; align-items: center;
+            border-bottom: 2px dashed var(--line-color); padding-bottom: 10px; margin-bottom: 10px;
         }
-        .line-input:focus { border-bottom-color: var(--espresso-brown); }
-        .name-field { font-weight: 900; font-size: 20px; }
-        textarea.line-input { resize: none; overflow: hidden; min-height: 40px; line-height: 1.6; }
-
-        .debt-container { display: flex; align-items: center; font-size: 15px; color: var(--latte-brown); font-weight: 700; margin-top: 5px; }
-        .debt-field { width: 80px; text-align: center; font-weight: 900; color: var(--debt-red); margin: 0 5px; font-size: 18px; border-bottom: 2px solid var(--debt-red); }
-
-        .end-icon { font-size: 26px; margin-top: 5px; color: var(--espresso-brown); }
-
-        .delete-btn {
-            position: absolute; left: -15px; top: 0; background: #ffebee; border: none; color: #e74c3c;
-            width: 30px; height: 30px; border-radius: 50%; cursor: pointer; opacity: 0; font-size: 14px;
-            transition: 0.3s; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; align-items: center; justify-content: center;
+        .name-input {
+            border: none; background: transparent; font-size: 20px; font-weight: 900;
+            color: var(--espresso-brown); width: 100%; outline: none;
         }
-        .person-item:hover .delete-btn { opacity: 1; left: -10px; }
+        .delete-user-btn {
+            background: none; border: none; color: #e74c3c; cursor: pointer; font-size: 18px; opacity: 0.5;
+        }
+        .delete-user-btn:hover { opacity: 1; }
 
-        .actions-area { margin-top: 30px; display: flex; gap: 15px; justify-content: center; }
+        /* قائمة الطلبات */
+        .items-list { margin-bottom: 15px; }
         
-        .btn-circle {
-            width: 50px; height: 50px; border-radius: 50%; border: none; color: white;
-            font-size: 24px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.2);
-            transition: 0.3s; display: flex; align-items: center; justify-content: center;
+        /* سطر الطلب الواحد */
+        .item-row {
+            display: flex; gap: 10px; align-items: center; margin-bottom: 8px;
         }
-        .add-btn { background-color: var(--espresso-brown); }
-        .camera-btn { background-color: var(--latte-brown); font-size: 20px; }
-        .btn-circle:hover { transform: scale(1.1); box-shadow: 0 6px 15px rgba(0,0,0,0.3); }
+        .item-name {
+            flex: 2; border: none; border-bottom: 1px solid var(--line-color);
+            padding: 5px; font-family: 'Cairo', sans-serif; font-size: 16px; outline: none;
+            background: transparent;
+        }
+        .item-price {
+            flex: 1; border: none; border-bottom: 1px solid var(--line-color);
+            padding: 5px; font-family: 'Cairo', sans-serif; font-size: 16px; outline: none;
+            background: transparent; text-align: center; color: var(--green-price); font-weight: bold;
+        }
+        .btn-remove-item {
+            color: #e74c3c; background: none; border: none; cursor: pointer; font-size: 18px; padding: 0 5px;
+        }
 
-        /* --- الشريط السفلي العائم --- */
+        /* أزرار التحكم داخل الكارت */
+        .card-actions { display: flex; justify-content: space-between; align-items: center; margin-top: 10px; }
+        
+        .btn-add-item {
+            background: var(--latte-brown); color: white; border: none; padding: 5px 15px;
+            border-radius: 15px; font-size: 13px; cursor: pointer; font-family: 'Cairo';
+        }
+        
+        .user-total {
+            font-size: 16px; font-weight: bold; color: var(--espresso-brown);
+        }
+        .user-total span { color: var(--debt-red); font-size: 20px; font-weight: 900; }
+
+        /* الأزرار الرئيسية */
+        .main-actions { display: flex; justify-content: center; gap: 15px; margin-top: 30px; }
+        .btn-circle {
+            width: 55px; height: 55px; border-radius: 50%; border: none; color: white;
+            font-size: 28px; cursor: pointer; box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: flex; align-items: center; justify-content: center; transition: 0.3s;
+        }
+        .add-user-btn { background-color: var(--espresso-brown); }
+        .camera-btn { background-color: var(--latte-brown); font-size: 22px; }
+        .btn-circle:hover { transform: scale(1.1); }
+
+        /* الشريط السفلي */
         .floating-footer {
             position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%);
             background: var(--espresso-brown); color: white;
             padding: 12px 30px; border-radius: 40px;
             box-shadow: 0 10px 25px rgba(0,0,0,0.3);
             display: flex; align-items: center; gap: 15px;
-            z-index: 100; min-width: 250px; justify-content: center;
+            z-index: 100; min-width: 280px; justify-content: center;
             border: 2px solid rgba(255,255,255,0.1);
         }
-        .total-label { font-size: 14px; opacity: 0.8; }
-        .total-amount { font-size: 22px; font-weight: 900; color: #fff; }
-        .currency { font-size: 14px; color: var(--gold); }
+        .total-amount { font-size: 24px; font-weight: 900; color: #fff; }
 
     </style>
 </head>
@@ -160,22 +186,23 @@
                 <div class="main-logo-text">1 2 1</div>
                 <span class="coffee-bean-decor" style="transform: rotate(20deg) scaleX(-1);">🫘</span>
             </div>
-            <div class="logo-sub">Professional Coffee Note</div>
+            <div class="logo-sub">Smart Order System</div>
         </div>
 
         <div class="notebook" id="capture-area">
-            <div id="users-list"></div>
+            <div id="users-container">
+                </div>
             
-            <div class="actions-area" data-html2canvas-ignore="true">
-                <button onclick="addNewUser()" class="btn-circle add-btn" title="إضافة شخص">+</button>
-                <button onclick="takeScreenshot()" class="btn-circle camera-btn" title="حفظ كصورة">📸</button>
+            <div class="main-actions" data-html2canvas-ignore="true">
+                <button onclick="addNewUser()" class="btn-circle add-user-btn" title="شخص جديد">+</button>
+                <button onclick="takeScreenshot()" class="btn-circle camera-btn" title="تصوير">📸</button>
             </div>
         </div>
 
         <div class="floating-footer">
-            <span class="total-label">إجمالي الكراسة:</span>
-            <span id="total-sum" class="total-amount">0</span>
-            <span class="currency">جنية</span>
+            <span style="font-size: 14px; opacity: 0.8;">الإجمالي الكلي:</span>
+            <span id="grand-total" class="total-amount">0</span>
+            <span style="font-size: 14px; color: var(--gold);">جنية</span>
         </div>
 
     </div>
@@ -196,16 +223,13 @@
         };
 
         let db;
-        
-        // غيرت الصوت هنا لصوت هادي جداً (Pop)
         const popSound = new Audio("http://codeskulptor-demos.commondatastorage.googleapis.com/pang/pop.mp3");
 
         function checkPassword() {
             if (document.getElementById('pass-input').value === "121") {
-                const screen = document.getElementById('login-screen');
-                screen.style.opacity = '0';
+                document.getElementById('login-screen').style.opacity = '0';
                 setTimeout(() => {
-                    screen.style.display = "none";
+                    document.getElementById('login-screen').style.display = "none";
                     document.getElementById('app-content').style.display = "flex";
                     initFirebase();
                 }, 500);
@@ -219,116 +243,178 @@
                 firebase.initializeApp(firebaseConfig);
                 db = firebase.database();
 
-                db.ref('users_pro').on('value', (snapshot) => {
+                // غيرنا المسار لـ notebook_v3 عشان النسخة الجديدة
+                db.ref('notebook_v3').on('value', (snapshot) => {
                     const data = snapshot.val();
-                    renderUsers(data);
-                    calculateTotal(data);
+                    renderAll(data);
                 });
             }
         }
 
-        function renderUsers(data) {
-            const container = document.getElementById('users-list');
+        // دالة الرسم الرئيسية (Render)
+        function renderAll(data) {
+            const container = document.getElementById('users-container');
+            let grandTotal = 0;
+
             if (!data) {
-                container.innerHTML = "<p style='text-align:center; color:#999; margin-top:50px;'>الكراسة فاضية.. دوس (+) عشان تضيف حد</p>";
+                container.innerHTML = "<p style='text-align:center; color:#aaa;'>ابدأ بإضافة أشخاص (+)</p>";
+                document.getElementById('grand-total').innerText = "0";
                 return;
             }
-            if (container.innerHTML.includes("الكراسة فاضية")) container.innerHTML = "";
 
-            Object.keys(data).forEach(key => {
-                const user = data[key];
-                let userDiv = document.getElementById(`user-${key}`);
+            // لو كان فيه رسالة "فاضي"، شيلها
+            if(container.innerHTML.includes("ابدأ بإضافة")) container.innerHTML = "";
 
-                if (!userDiv) {
-                    userDiv = document.createElement('div');
-                    userDiv.id = `user-${key}`;
-                    userDiv.className = 'person-item';
-                    userDiv.innerHTML = `
-                        <button class="delete-btn" onclick="deleteUser('${key}')">✕</button>
-                        <div class="inputs-group">
-                            <input type="text" id="name-${key}" class="line-input name-field" placeholder="الاسم..." oninput="updateUser('${key}')">
-                            <textarea id="note-${key}" class="line-input" placeholder="الطلبات..." oninput="updateUser('${key}'); autoResize(this)"></textarea>
-                            <div class="debt-container">
-                                الحساب: <input type="number" id="debt-${key}" class="line-input debt-field" placeholder="0" oninput="updateUser('${key}')"> جنية
-                            </div>
+            // 1. التعامل مع البيانات (Data Processing)
+            Object.keys(data).forEach(userId => {
+                const user = data[userId];
+                
+                // حساب إجمالي الشخص
+                let userTotal = 0;
+                if(user.items) {
+                    Object.values(user.items).forEach(item => {
+                        userTotal += Number(item.price) || 0;
+                    });
+                }
+                grandTotal += userTotal;
+
+                // هل الكارت موجود؟ لو لأ اصنعه
+                let card = document.getElementById(`card-${userId}`);
+                if (!card) {
+                    card = document.createElement('div');
+                    card.id = `card-${userId}`;
+                    card.className = 'person-card';
+                    card.innerHTML = `
+                        <div class="card-header">
+                            <input type="text" id="name-${userId}" class="name-input" placeholder="اسم الشخص..." oninput="updateName('${userId}', this.value)">
+                            <button class="delete-user-btn" onclick="deleteUser('${userId}')">×</button>
                         </div>
-                        <div class="end-icon">☕</div>
+                        <div class="items-list" id="items-${userId}">
+                            </div>
+                        <div class="card-actions">
+                            <button class="btn-add-item" onclick="addItem('${userId}')">+ طلب جديد</button>
+                            <div class="user-total">الإجمالي: <span id="total-${userId}">0</span> ج.م</div>
+                        </div>
                     `;
-                    container.appendChild(userDiv);
-                    // تشغيل الصوت الهادي عند ظهور شخص جديد
-                    popSound.play().catch(()=>{}); 
+                    container.appendChild(card);
+                    popSound.play().catch(()=>{});
                 }
 
-                const nameInput = document.getElementById(`name-${key}`);
-                const noteInput = document.getElementById(`note-${key}`);
-                const debtInput = document.getElementById(`debt-${key}`);
-
+                // تحديث الاسم (دون تضييع التركيز)
+                const nameInput = document.getElementById(`name-${userId}`);
                 if (document.activeElement !== nameInput) nameInput.value = user.name || "";
-                if (document.activeElement !== noteInput) {
-                    noteInput.value = user.note || "";
-                    autoResize(noteInput);
+
+                // تحديث الإجمالي المعروض للشخص
+                document.getElementById(`total-${userId}`).innerText = userTotal;
+
+                // معالجة عناصر القائمة (Items)
+                const itemsContainer = document.getElementById(`items-${userId}`);
+                const itemsData = user.items || {};
+                
+                // رسم كل طلب
+                Object.keys(itemsData).forEach(itemId => {
+                    const item = itemsData[itemId];
+                    let itemRow = document.getElementById(`item-${itemId}`);
+                    
+                    if(!itemRow) {
+                        itemRow = document.createElement('div');
+                        itemRow.id = `item-${itemId}`;
+                        itemRow.className = 'item-row';
+                        itemRow.innerHTML = `
+                            <input type="text" class="item-name" id="iname-${itemId}" placeholder="الطلب" oninput="updateItem('${userId}', '${itemId}')">
+                            <input type="number" class="item-price" id="iprice-${itemId}" placeholder="السعر" oninput="updateItem('${userId}', '${itemId}')">
+                            <button class="btn-remove-item" onclick="deleteItem('${userId}', '${itemId}')">×</button>
+                        `;
+                        itemsContainer.appendChild(itemRow);
+                    }
+
+                    // تحديث القيم داخل الطلب
+                    const iName = document.getElementById(`iname-${itemId}`);
+                    const iPrice = document.getElementById(`iprice-${itemId}`);
+                    
+                    if(document.activeElement !== iName) iName.value = item.text || "";
+                    if(document.activeElement !== iPrice) iPrice.value = item.price || "";
+                });
+
+                // تنظيف الطلبات المحذوفة
+                const currentItemIds = Object.keys(itemsData);
+                const domItems = itemsContainer.getElementsByClassName('item-row');
+                for (let i = domItems.length - 1; i >= 0; i--) {
+                    const id = domItems[i].id.replace('item-', '');
+                    if(!currentItemIds.includes(id)) domItems[i].remove();
                 }
-                if (document.activeElement !== debtInput) debtInput.value = user.debt || "";
             });
 
-            const currentIds = Object.keys(data);
-            const domDivs = container.getElementsByClassName('person-item');
-            for (let i = domDivs.length - 1; i >= 0; i--) {
-                const divId = domDivs[i].id.replace('user-', '');
-                if (!currentIds.includes(divId)) {
-                    domDivs[i].remove();
-                }
+            // تنظيف الكروت المحذوفة
+            const currentUserIds = Object.keys(data);
+            const domCards = container.getElementsByClassName('person-card');
+            for (let i = domCards.length - 1; i >= 0; i--) {
+                const id = domCards[i].id.replace('card-', '');
+                if(!currentUserIds.includes(id)) domCards[i].remove();
+            }
+
+            // تحديث الإجمالي الكلي أسفل الشاشة
+            animateValue("grand-total", parseInt(document.getElementById("grand-total").innerText), grandTotal, 500);
+        }
+
+        // --- دوال التحكم ---
+
+        // إضافة شخص
+        function addNewUser() {
+            const newRef = db.ref('notebook_v3').push();
+            newRef.set({ name: "", items: {} });
+        }
+
+        // تحديث اسم الشخص
+        function updateName(userId, val) {
+            db.ref(`notebook_v3/${userId}`).update({ name: val });
+        }
+
+        // حذف شخص
+        function deleteUser(userId) {
+            if(confirm("مسح الكارت بالكامل؟")) {
+                db.ref(`notebook_v3/${userId}`).remove();
             }
         }
 
-        function calculateTotal(data) {
-            let total = 0;
-            if (data) {
-                Object.values(data).forEach(user => {
-                    total += Number(user.debt) || 0;
-                });
-            }
-            animateValue("total-sum", parseInt(document.getElementById("total-sum").innerText), total, 500);
+        // إضافة طلب جديد داخل الكارت
+        function addItem(userId) {
+            const itemRef = db.ref(`notebook_v3/${userId}/items`).push();
+            itemRef.set({ text: "", price: "" });
         }
 
+        // تحديث بيانات الطلب (الاسم او السعر)
+        function updateItem(userId, itemId) {
+            const text = document.getElementById(`iname-${itemId}`).value;
+            const price = document.getElementById(`iprice-${itemId}`).value;
+            
+            db.ref(`notebook_v3/${userId}/items/${itemId}`).update({
+                text: text,
+                price: Number(price) // تحويل لرقم عشان الجمع
+            });
+        }
+
+        // حذف طلب واحد
+        function deleteItem(userId, itemId) {
+            db.ref(`notebook_v3/${userId}/items/${itemId}`).remove();
+        }
+
+        // أنيميشن الأرقام
         function animateValue(id, start, end, duration) {
             if (start === end) return;
+            const obj = document.getElementById(id);
             const range = end - start;
             let current = start;
             const increment = end > start ? 1 : -1;
             const stepTime = Math.abs(Math.floor(duration / range));
-            const obj = document.getElementById(id);
             const timer = setInterval(function() {
                 current += increment;
-                obj.innerHTML = current;
-                if (current == end) { clearInterval(timer); }
+                obj.innerText = current;
+                if (current == end) clearInterval(timer);
             }, Math.max(stepTime, 10));
         }
 
-        function addNewUser() {
-            const newKey = db.ref('users_pro').push().key;
-            db.ref('users_pro/' + newKey).set({ name: "", note: "", debt: 0 });
-        }
-
-        function updateUser(key) {
-            db.ref('users_pro/' + key).update({
-                name: document.getElementById(`name-${key}`).value,
-                note: document.getElementById(`note-${key}`).value,
-                debt: document.getElementById(`debt-${key}`).value
-            });
-        }
-
-        function deleteUser(key) {
-            if(confirm("أكيد عايز تمسح الشخص ده من الكراسة؟")) {
-                db.ref('users_pro/' + key).remove();
-            }
-        }
-
-        function autoResize(el) {
-            el.style.height = 'auto';
-            el.style.height = el.scrollHeight + 'px';
-        }
-
+        // تصوير الشاشة
         function takeScreenshot() {
             const btn = document.querySelector('.camera-btn');
             btn.innerHTML = "⏳";
@@ -336,11 +422,11 @@
                 scale: 2, backgroundColor: "#FFFCF7"
             }).then(canvas => {
                 const link = document.createElement('a');
-                link.download = 'fatoura-121.png';
+                link.download = 'Receipt-121.png';
                 link.href = canvas.toDataURL();
                 link.click();
                 btn.innerHTML = "📸";
-                alert("تم حفظ صورة الفاتورة! ✅");
+                alert("تم حفظ الفاتورة ✅");
             });
         }
     </script>
