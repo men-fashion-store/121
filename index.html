@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1 two 1 - كراسة المشروبات</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        /* تعريف الألوان الأساسية */
+        :root {
+            --bg-vanilla-latte: #F8F0E3; /* لون الخلفية فانيليا لاتيه */
+            --paper-color: #fffcf8; /* لون الورقة أفتح قليلاً */
+            --line-color: #d1c4b5; /* لون تسطير الكراسة */
+            --text-brown: #5a4a42; /* لون الخط بني غامق مريح */
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: var(--bg-vanilla-latte);
+            color: var(--text-brown);
+            margin: 0;
+            padding: 20px;
+        }
+
+        /* تنسيق اللوجو العلوي */
+        .header-logo {
+            text-align: center;
+            font-size: 36px;
+            font-weight: 800;
+            color: var(--text-brown);
+            margin-bottom: 30px;
+            letter-spacing: 2px;
+            /* تأثير بسيط تحت اللوجو */
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        
+        /* الحاوية الرئيسية التي تشبه صفحة الكراسة */
+        .notebook-page {
+            max-width: 600px;
+            margin: 0 auto; /* توسيط الصفحة */
+            background-color: var(--paper-color);
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 6px 15px rgba(90, 74, 66, 0.08);
+            border: 1px solid #eaddd0;
+        }
+
+        /* تنسيق السطر الخاص بكل شخص */
+        .person-entry {
+            display: flex; /* عشان نحط الأيقونة جنب الكلام */
+            align-items: flex-start;
+            margin-bottom: 25px;
+            padding-bottom: 25px;
+            /* الخط الفاصل المنقط تحت كل شخص */
+            border-bottom: 2px dashed var(--line-color);
+        }
+        
+        /* أيقونة فنجان القهوة */
+        .coffee-icon {
+            font-size: 28px;
+            margin-left: 15px;
+            padding-top: 5px;
+        }
+
+        /* محتوى بيانات الشخص */
+        .entry-details {
+            flex-grow: 1; /* يأخذ باقي المساحة */
+        }
+
+        /* تنسيق خانات الإدخال لتشبه الأسطر */
+        .notebook-input {
+            width: 100%;
+            border: none;
+            background: transparent;
+            border-bottom: 2px solid var(--line-color); /* السطر */
+            font-family: 'Cairo', sans-serif;
+            font-size: 18px;
+            color: var(--text-brown);
+            padding: 8px 0;
+            margin-bottom: 15px;
+            outline: none; /* إزالة برواز التركيز الأزرق */
+            transition: border-color 0.3s;
+        }
+
+        /* عند الضغط على السطر يتغير لونه */
+        .notebook-input:focus {
+            border-bottom-color: #a68b7c;
+        }
+
+        /* تنسيق خاص لخانة الاسم */
+        .name-input {
+            font-weight: 700;
+            font-size: 20px;
+        }
+
+        /* تنسيق خانة المشروبات (تكبر تلقائياً) */
+        textarea.notebook-input {
+            resize: vertical; /* السماح بالتكبير الرأسي فقط */
+            min-height: 60px;
+            line-height: 1.5;
+        }
+
+        /* تنسيق سطر المديونية */
+        .debt-row {
+            display: flex;
+            align-items: center;
+            font-weight: bold;
+        }
+        .debt-input {
+            width: 100px;
+            text-align: center;
+            margin: 0 10px;
+            font-weight: bold;
+        }
+
+        .status {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #88766a;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header-logo">1 2 1</div>
+
+    <div class="notebook-page">
+        
+        <div class="person-entry">
+            <div class="coffee-icon">☕</div>
+            <div class="entry-details">
+                <input type="text" id="p1_name" class="notebook-input name-input" placeholder="اسم الشخص الأول..." oninput="updateDB()">
+                
+                <textarea id="p1_note" class="notebook-input" placeholder="اكتب المشروبات هنا (السطر سيكبر معك)..." oninput="updateDB()"></textarea>
+                
+                <div class="debt-row">
+                    <span>الحساب:</span>
+                    <input type="number" id="p1_debt" class="notebook-input debt-input" placeholder="0" oninput="updateDB()">
+                    <span>جنيه</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="person-entry">
+            <div class="coffee-icon">☕</div>
+            <div class="entry-details">
+                <input type="text" id="p2_name" class="notebook-input name-input" placeholder="اسم الشخص الثاني..." oninput="updateDB()">
+                
+                <textarea id="p2_note" class="notebook-input" placeholder="اكتب المشروبات هنا (السطر سيكبر معك)..." oninput="updateDB()"></textarea>
+                
+                <div class="debt-row">
+                    <span>الحساب:</span>
+                    <input type="number" id="p2_debt" class="notebook-input debt-input" placeholder="0" oninput="updateDB()">
+                    <span>جنيه</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="status" id="status">جاري الاتصال بالكراسة...</div>
+
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <script>
+        // ----------------------------------------------------
+        // هام: ضع هنا كود إعدادات فايربيس الخاص بك
+        // ----------------------------------------------------
+        const firebaseConfig = {
+            // ... انسخ الـ config بتاعك هنا مكان النقط دي ...
+            // apiKey: "AIzaSyB...",
+            // authDomain: "...",
+            // ... إلخ
+        }; 
+
+        // (لو نسيت الـ config القديم، متقلقش، الكود ده هيشتغل بس مش هيحفظ أونلاين لحد ما تحطه)
+        // لو معاك الـ config، امسح السطرين الجايين دول وحط الـ config بتاعك فوق
+        if (!firebase.apps.length) {
+             alert("تنبيه: لم يتم وضع إعدادات Firebase. الكود سيعمل كشكل فقط ولن يحفظ البيانات.");
+        } else {
+             // تهيئة فايربيس
+            firebase.initializeApp(firebaseConfig);
+        }
+       
+
+        // باقي كود الجافاسكريبت (زي ما هو بدون تغيير عشان المنطق يفضل شغال)
+        let db;
+        if (firebase.apps.length) { db = firebase.database(); }
+        const statusDiv = document.getElementById('status');
+
+        const inputs = {
+            p1: {
+                name: document.getElementById('p1_name'),
+                note: document.getElementById('p1_note'),
+                debt: document.getElementById('p1_debt')
+            },
+            p2: {
+                name: document.getElementById('p2_name'),
+                note: document.getElementById('p2_note'),
+                debt: document.getElementById('p2_debt')
+            }
+        };
+
+        function updateDB() {
+            if (!db) return;
+            db.ref('notebook_data').set({
+                p1: {
+                    name: inputs.p1.name.value,
+                    note: inputs.p1.note.value,
+                    debt: inputs.p1.debt.value
+                },
+                p2: {
+                    name: inputs.p2.name.value,
+                    note: inputs.p2.note.value,
+                    debt: inputs.p2.debt.value
+                }
+            }, (error) => {
+                if (error) { statusDiv.innerText = "خطأ في الحفظ!"; }
+                else {
+                    statusDiv.innerText = "جاري الحفظ...";
+                    setTimeout(() => statusDiv.innerText = "تم الحفظ في الكراسة ✓", 1000);
+                }
+            });
+        }
+
+        if (db) {
+            db.ref('notebook_data').on('value', (snapshot) => {
+                const data = snapshot.val();
+                if (data) {
+                    if (document.activeElement !== inputs.p1.name) inputs.p1.name.value = data.p1.name || "";
+                    if (document.activeElement !== inputs.p1.note) inputs.p1.note.value = data.p1.note || "";
+                    if (document.activeElement !== inputs.p1.debt) inputs.p1.debt.value = data.p1.debt || "";
+                    
+                    if (document.activeElement !== inputs.p2.name) inputs.p2.name.value = data.p2.name || "";
+                    if (document.activeElement !== inputs.p2.note) inputs.p2.note.value = data.p2.note || "";
+                    if (document.activeElement !== inputs.p2.debt) inputs.p2.debt.value = data.p2.debt || "";
+                    
+                    statusDiv.innerText = "متصل - الكراسة محدثة";
+                }
+            });
+        }
+    </script>
+</body>
+</html>
